@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Comuni d'Italia</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./vendor/bootstrap-3.3.7.css">
+  <link rel="stylesheet" href="./vendor/awesomplete.css">
+  <link rel="stylesheet" href="./styles.css">
+
+  <!-- Scripts -->
+  <script>delete module.exports</script>
+  <script src="./vendor/jquery-3.1.1.js"></script>
+  <script src="./vendor/awesomplete.min.js"></script>
+  <script src="./window.js" charset="utf-8"></script>
+
+</head>
+
+<body>
+
+  <div id="container" class="container">
+
+    <div class="row">
+      <p>Start typing to filter the list of <span id="num-comuni"></span> comuni names...</p>
+    </div>
+
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="comuni" class="col-sm-1 control-label">Comune: </label>
+        <div class="col-sm-5">
+          <input id="comuni" class="form-control">
+        </div>
+      </div>
+    </form>
+
+    <div class="row">
+        <p>Data source: <a href="https://github.com/matteocontrini/comuni-json" target="_blank">
+          <!-- <img src="italy-flag.png" width="16" height="16"/> -->
+          Database comuni italiani (2017) con informazioni ISTAT + CAP aggiornati</a></p>
+      </div>
+
+    <script>
+
+      var fs = require('fs');
+
+      var filePath = "C:/Repos/simple-samples/prices/comuni.json";
+
+      fs.readFile(filePath, 'utf-8', (err, data) => {
+        if (err) {
+          alert("An error ocurred reading the file :" + err.message);
+          return;
+        }
+
+        var comuni = $.parseJSON(data);
+
+        var names = [];
+
+        $.each(comuni, function (key, comune) {
+
+          //console.log(comune.nome); // <-- source, targe
+
+          names.push(comune.nome);
+
+        });
+
+        $("#num-comuni").text(names.length);
+
+        var input = document.getElementById("comuni");
+
+        new Awesomplete(input, {
+          list: names
+        });
+      });
+
+    </script>
+
+  </div>
+
+</body>
+
+</html>
