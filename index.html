@@ -16,20 +16,24 @@
   <script src="./vendor/jquery-3.1.1.js"></script>
   <script src="./vendor/awesomplete.min.js"></script>
   <script src="./window.js" charset="utf-8"></script>
+  <script src="./translations/translate.js" charset="utf-8"></script>
 
 </head>
 
 <body>
 
+  <h4>{{ i18n "Welcome" }}</h4>
+
   <div id="container" class="container">
 
     <div class="row">
-      <p>Start typing to filter the list of <span id="num-comuni"></span> comuni names...</p>
+      <p>{{ i18n "Start typing to filter the list of" }}
+        <span id="num-comuni"></span> {{ i18n "city names" }}...</p>
     </div>
 
     <form class="form-horizontal">
       <div class="form-group">
-        <label for="comuni" class="col-sm-1 control-label">Comune: </label>
+        <label for="comuni" class="col-sm-1 control-label">{{ i18n "Comune" }}: </label>
         <div class="col-sm-5">
           <input id="comuni" class="form-control">
         </div>
@@ -37,16 +41,18 @@
     </form>
 
     <div class="row">
-        <p>Data source: <a href="https://github.com/matteocontrini/comuni-json" target="_blank">
+      <p>{{ i18n "Data source" }}:
+        <a href="https://github.com/matteocontrini/comuni-json" target="_blank">
           <!-- <img src="italy-flag.png" width="16" height="16"/> -->
-          Database comuni italiani (2017) con informazioni ISTAT + CAP aggiornati</a></p>
-      </div>
+          Database comuni italiani (2017) con informazioni ISTAT + CAP aggiornati</a>
+      </p>
+    </div>
 
     <script>
 
       var fs = require('fs');
 
-      var filePath = "C:/Repos/simple-samples/prices/comuni.json";
+      var filePath = "C:/Repos/italy/comuni.json";
 
       fs.readFile(filePath, 'utf-8', (err, data) => {
         if (err) {
@@ -73,6 +79,9 @@
         new Awesomplete(input, {
           list: names
         });
+
+        $("#comuni").focus();
+
       });
 
     </script>

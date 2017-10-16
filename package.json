@@ -2,6 +2,7 @@
   "name": "ComuniItalia",
   "version": "1.0.0",
   "description": "Simple application to make it easy to search for Italian comune names.",
+  "license": "ISC",
   "repository": "italia",
   "main": "app.js",
   "scripts": {
@@ -10,19 +11,37 @@
     "dist": "electron-builder",
     "postinstall": "electron-builder install-app-deps"
   },
-  "license": "ISC",
   "author": "Leniel Macaferi <leniel@gmail.com>",
   "devDependencies": {
-    "electron": "^1.4.12",
-    "electron-builder": "^19.36.0",
-    "electron-prebuilt": "^1.4.13"
+    "electron": "^1.7.9",
+    "electron-builder": "^19.37.2"
   },
   "build": {
     "appId": "lenielmacaferi.comuniitalia",
-    "win": {}
+    "win": {
+      "target": [
+        "portable"
+      ]
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "handlebars": "^4.0.10",
+    "i18n": "^0.8.3",
     "jquery": "^3.2.1"
   }
 }

@@ -2,21 +2,25 @@ var electron = require('electron') // http://electron.atom.io/docs/api
 var path = require('path')         // https://nodejs.org/api/path.html
 var url = require('url')           // https://nodejs.org/api/url.html
 
+const { BrowserWindow, ipcMain } = require('electron');
+
 var window = null
 
 // Wait until the app is ready
 electron.app.once('ready', function () {
   // Create a new window
-  window = new electron.BrowserWindow({
+  window = new BrowserWindow({
     width: 800,
     height: 400,
     // Don't show the window until it's ready, this prevents any white flickering
     show: false,
     // Don't allow the window to be resized.
-    resizable: false,
+    resizable: true,
     icon: __dirname + '/italy.ico'
-  })
+  }); 
 
+  require('./menu/mainmenu')
+  
   //window.openDevTools();
 
   // Load a URL in the window to the local index.html path
@@ -26,11 +30,12 @@ electron.app.once('ready', function () {
     slashes: true
   }))
 
-  // Show window when page is ready
-  window.once('ready-to-show', function () {
-    window.show()
-  })
+  ipcMain.on("translation-complete", (event, args) => {
+    //This will show the sender's BrowserWindow
+    BrowserWindow.fromWebContents(event.sender.webContents).show();
+  });
 
+  // Open external links in the default browser
   window.webContents.on('new-window', function (e, url) {
     e.preventDefault();
     electron.shell.openExternal(url);
